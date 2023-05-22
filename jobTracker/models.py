@@ -1,0 +1,36 @@
+from datetime import datetime
+from jobTracker import db
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}')"
+
+
+class Job(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    url = db.Column(db.String(100), nullable=True)
+    date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    company = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Job('{self.title}', '{self.date_added}')"
+
+
+class Application(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    job_id = db.Column(db.Integer, db.ForeignKey('job.id'), nullable=False)
+    application_date = db.Column(db.DateTime, nullable=False)
+    status = db.Column(db.String(100), nullable=False)
+    notes = db.Column(db.String(100), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Application('{self.job_id.title}', '{self.application_date}')"
