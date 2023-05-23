@@ -3,16 +3,17 @@ from jobTracker import db
 
 
 class User(db.Model):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}')"
+        return f"User('{self.email}')"
 
 
 class Job(db.Model):
+    __tablename__ = "job"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     url = db.Column(db.String(100), nullable=True)
@@ -25,6 +26,7 @@ class Job(db.Model):
 
 
 class Application(db.Model):
+    __tablename__ = "application"
     id = db.Column(db.Integer, primary_key=True)
     job_id = db.Column(db.Integer, db.ForeignKey('job.id'), nullable=False)
     application_date = db.Column(db.DateTime, nullable=False)
