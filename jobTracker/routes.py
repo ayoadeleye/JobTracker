@@ -3,6 +3,7 @@ from jobTracker import app, db, bcrypt
 from flask_login import current_user, login_user, logout_user, login_manager
 from jobTracker.forms import RegistrationForm, LoginForm
 from jobTracker.models import User
+from scraper import scrape_indeed_jobs 
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -46,3 +47,10 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/search', methods=['POST'])
+def search():
+    query = request.form['query']
+    jobs = scrape_indeed_jobs(query)
+    return render_template('results.html', jobs=jobs)

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Search Results</title>
+</head>
+<body>
+    <h1>Job Search Results</h1>
+
+    {% if jobs %}
+        <ul>
+            {% for job in jobs %}
+                <li>
+                    <h2>{{ job.title }}</h2>
+                    <p>Company: {{ job.company }}</p>
+                    <p>Location: {{ job.location }}</p>
+                    <p>Date: {{ job.date }}</p>
+                    <a href="{{ job.link }}">Link</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No jobs found.</p>
+    {% endif %}
+</body>
+</html>
